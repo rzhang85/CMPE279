@@ -1,4 +1,4 @@
-// Server side C/C++ program to demonstrate Socket programming
+// Server side C/C++ program to demonstrate Socket programming, Ru Zhang's submission
 
 #include <unistd.h>
 #include <stdio.h>
