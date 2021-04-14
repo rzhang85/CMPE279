@@ -55,7 +55,7 @@ int main(int argc, char const *argv[])
     }
 
     // use fork() and setuid() for priviledge seperation
-    pid_t pid = fork()
+    pid_t pid = fork();
     if(pid < 0){
         printf("Fork failed.\n");
         exit(EXIT_FAILURE);
