@@ -1,12 +1,10 @@
 // Server side C/C++ program to demonstrate Socket programming, Ru Zhang's submission
-
 #include <unistd.h>
 #include <stdio.h>
 #include <sys/socket.h>
 #include <stdlib.h>
 #include <netinet/in.h>
 #include <string.h>
-
 #define PORT 80
 int main(int argc, char const *argv[])
 {
@@ -55,9 +53,43 @@ int main(int argc, char const *argv[])
         perror("accept");
         exit(EXIT_FAILURE);
     }
-    valread = read( new_socket , buffer, 1024);
-    printf("%s\n",buffer );
-    send(new_socket , hello , strlen(hello) , 0 );
-    printf("Hello message sent\n");
+
+    // use fork() and setuid() for priviledge seperation
+    pid_t pid = fork()
+    if(pid < 0){
+        printf("Fork failed.\n");
+        exit(EXIT_FAILURE);
+    }
+    else if(pid == 0){
+        // child process
+        printf("Child process begin:\n");
+        // "nobody" user in Linux is 65534
+        if(setuid(65534) == 0){ //On success, zero is returned.  On error, -1 is returned
+            printf("Priviledge drop success.\n");
+            // actual process start here
+            valread = read( new_socket , buffer, 1024);
+            printf("%s\n",buffer );
+            send(new_socket , hello , strlen(hello) , 0 );
+            printf("Hello message sent\n");
+        }
+        else{
+            printf("Priviledge drop failed.\n");
+            exit(EXIT_FAILURE);
+        }
+
+
+        printf("Child process ends here.\n");
+    }
+    else if(pid > 0){
+        // parent process
+        wait();
+        printf("Parnet process ends here.\n");
+    }
+
+
+    // valread = read( new_socket , buffer, 1024);
+    // printf("%s\n",buffer );
+    // send(new_socket , hello , strlen(hello) , 0 );
+    // printf("Hello message sent\n");
     return 0;
 }
