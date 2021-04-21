@@ -68,7 +68,7 @@ int main(int argc, char const *argv[])
                 printf("Priviledge drop success.\n");
                 // actual process start here
                 // re-exec to build more secure environment
-                printf("Re-exec begins here");
+                printf("Re-exec begins here\n");
                 char  *new_arg[] = {argv[0], new_socket, NULL}; // NULL terminated array of char* strings
                 execvp(argv[0], new_arg); // (const char *file, char *const argv[])
             }
