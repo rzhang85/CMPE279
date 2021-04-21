@@ -85,10 +85,14 @@ int main(int argc, char const *argv[])
             printf("Parnet process ends here.\n");
         }
     }
-    else if(argc > 1){   // after re-exec, the argv contains
+    else if(argc == 2){   // after re-exec, the argv contains
         printf("Success re-exec!\n");
         int new_socket = atoi(argv[1]);
         read_and_write(new_socket);
+    }
+    else{
+        printf("Re-exec failed.\n");
+        exit(EXIT_FAILURE);
     }
 
     return 0;
