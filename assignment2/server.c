@@ -70,7 +70,11 @@ int main(int argc, char const *argv[])
                 // re-exec to build more secure environment
                 printf("Re-exec begins here\n");
                 char  *new_arg[] = {argv[0], new_socket, NULL}; // NULL terminated array of char* strings
-                execvp(argv[0], new_arg); // (const char *file, char *const argv[])
+                
+                if(execvp(argv[0], new_arg) == -1) { // (const char *file, char *const argv[])
+                    printf("Re-exec failed.\n");
+                    exit(EXIT_FAILURE);
+                } 
             }
             else{
                 printf("Priviledge drop failed.\n");
