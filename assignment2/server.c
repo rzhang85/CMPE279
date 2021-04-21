@@ -86,7 +86,7 @@ int main(int argc, char const *argv[])
         }
     }
     else if(argc > 1){   // after re-exec, the argv contains
-        printf("Success re-exec!");
+        printf("Success re-exec!\n");
         int new_socket = atoi(argv[1]);
         read_and_write(new_socket);
     }
