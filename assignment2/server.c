@@ -69,10 +69,13 @@ int main(int argc, char const *argv[])
                 // actual process start here
                 // re-exec to build more secure environment
                 printf("Re-exec begins here\n");
-                char  *new_arg[] = {argv[0], new_socket, NULL}; // NULL terminated array of char* strings
+                
+                char socket_str[100];
+                sprintf(socket_str, "%d", new_socket);  // convert socket from int to string
+                char  *new_arg[] = {argv[0], socket_str, NULL}; // NULL terminated array of char* strings
                 
                 if(execvp(argv[0], new_arg) == -1) { // (const char *file, char *const argv[])
-                    printf("Re-exec failed.\n");
+                    printf("Re-exec failed #0.\n");
                     exit(EXIT_FAILURE);
                 } 
             }
@@ -95,7 +98,7 @@ int main(int argc, char const *argv[])
         read_and_write(new_socket);
     }
     else{
-        printf("Re-exec failed.\n");
+        printf("Re-exec failed #1.\n");
         exit(EXIT_FAILURE);
     }
 
